@@ -1,0 +1,702 @@
+{
+  "address": "GzzSVgMowPhr39MUxLb9yA1cncfmjREHrrGEEvawbKK9",
+  "metadata": {
+    "name": "vaultplex",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "deposit_sol",
+      "discriminator": [
+        108,
+        81,
+        78,
+        117,
+        125,
+        155,
+        56,
+        200
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "vault_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "vault_config.seed",
+                "account": "VaultConfig"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "vault_config.seed",
+                "account": "VaultConfig"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fee_treasury",
+          "writable": true,
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  116,
+                  114,
+                  101,
+                  97,
+                  115,
+                  117,
+                  114,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "vault_config"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize_access_control_extension",
+      "discriminator": [
+        85,
+        240,
+        13,
+        64,
+        92,
+        56,
+        165,
+        160
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "vault_config"
+          ]
+        },
+        {
+          "name": "vault_config",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "access_control_authority",
+          "type": "pubkey"
+        },
+        {
+          "name": "access_control_type",
+          "type": {
+            "defined": {
+              "name": "AccessControlType"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize_deposit_period_extension",
+      "discriminator": [
+        227,
+        25,
+        59,
+        65,
+        96,
+        114,
+        231,
+        231
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "vault_config"
+          ]
+        },
+        {
+          "name": "vault_config",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "start_slot",
+          "type": "u64"
+        },
+        {
+          "name": "end_slot",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize_fee_extension",
+      "discriminator": [
+        190,
+        245,
+        126,
+        154,
+        240,
+        32,
+        236,
+        144
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "vault_config"
+          ]
+        },
+        {
+          "name": "vault_config",
+          "writable": true
+        },
+        {
+          "name": "treasury",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  116,
+                  114,
+                  101,
+                  97,
+                  115,
+                  117,
+                  114,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "vault_config"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "fee_authority",
+          "type": "pubkey"
+        },
+        {
+          "name": "fee_collector",
+          "type": "pubkey"
+        },
+        {
+          "name": "deposit_fee_basis_points",
+          "type": "u16"
+        },
+        {
+          "name": "max_deposit_fee",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize_lock_extension",
+      "discriminator": [
+        77,
+        136,
+        159,
+        159,
+        19,
+        138,
+        255,
+        221
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "vault_config"
+          ]
+        },
+        {
+          "name": "vault_config",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "lock_authority",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "initialize_share_extension",
+      "discriminator": [
+        125,
+        219,
+        121,
+        32,
+        2,
+        87,
+        242,
+        254
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "vault_config"
+          ]
+        },
+        {
+          "name": "vault_config",
+          "writable": true
+        },
+        {
+          "name": "vshares_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  104,
+                  97,
+                  114,
+                  101,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "vault_config"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "mint_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize_vault",
+      "discriminator": [
+        48,
+        191,
+        163,
+        44,
+        71,
+        129,
+        63,
+        164
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "vault_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "seed",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "lock_vault",
+      "discriminator": [
+        88,
+        219,
+        122,
+        115,
+        28,
+        236,
+        222,
+        117
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "vault_config"
+          ]
+        },
+        {
+          "name": "vault_config",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "unlock_vault",
+      "discriminator": [
+        208,
+        120,
+        125,
+        99,
+        55,
+        12,
+        246,
+        239
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "vault_config"
+          ]
+        },
+        {
+          "name": "vault_config",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "TreasuryData",
+      "discriminator": [
+        73,
+        12,
+        230,
+        7,
+        66,
+        226,
+        146,
+        109
+      ]
+    },
+    {
+      "name": "VaultConfig",
+      "discriminator": [
+        99,
+        86,
+        43,
+        216,
+        184,
+        102,
+        119,
+        77
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Unauthorized",
+      "msg": "Unauthorized access to lock or unlock the vault"
+    },
+    {
+      "code": 6001,
+      "name": "VaultLocked",
+      "msg": "The vault is currently locked"
+    },
+    {
+      "code": 6002,
+      "name": "Overflow",
+      "msg": "The vault operation just overflowed"
+    },
+    {
+      "code": 6003,
+      "name": "VaultClosedForDeposits",
+      "msg": "The vault is closed for deposits at the current slot"
+    },
+    {
+      "code": 6004,
+      "name": "ExtensionNotFound",
+      "msg": "Extension not found in the vault data"
+    },
+    {
+      "code": 6005,
+      "name": "ExtensionOffsetFailed",
+      "msg": "Writing in Extension failed. No offset found"
+    },
+    {
+      "code": 6006,
+      "name": "WrongType",
+      "msg": "That instruction is not supported for the current Vault Type"
+    },
+    {
+      "code": 6007,
+      "name": "ExtensionDeserializationFailed",
+      "msg": "Deserialiasdasd failed"
+    },
+    {
+      "code": 6008,
+      "name": "ExtensionDepositPeriodNotOpenYet",
+      "msg": "Vault deposits are not yet opened"
+    },
+    {
+      "code": 6009,
+      "name": "ExtensionDepositPeriodEnded",
+      "msg": "Vault deposits are ended"
+    },
+    {
+      "code": 6010,
+      "name": "ExtensionDepositPeriodFailed",
+      "msg": "Vault deposits extension failed"
+    },
+    {
+      "code": 6011,
+      "name": "ExtensionDepositDenied",
+      "msg": "You don't have permission to deposit into the vault"
+    },
+    {
+      "code": 6012,
+      "name": "FeeTreasuryNotProvided",
+      "msg": "The fee treasury account wasn't provided"
+    }
+  ],
+  "types": [
+    {
+      "name": "AccessControlType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Public"
+          },
+          {
+            "name": "Private"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TreasuryData",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "authority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VaultConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "seed",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "vault_bump",
+            "type": "u8"
+          },
+          {
+            "name": "extensions",
+            "type": {
+              "array": [
+                "u8",
+                176
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "constants": [
+    {
+      "name": "SEED",
+      "type": "string",
+      "value": "\"anchor\""
+    }
+  ]
+}
